@@ -29,3 +29,37 @@ def caesar(message, offset):
 
 caesar(text, shift)
 caesar(text, 13)
+
+# -----------------------------------------------------------------------------------
+# Vigenère Cipher (encrypt, decrypt fucntionality)
+# offset for each letter is determined by another text, called the key
+custom_key = "python"
+
+
+def vigenere(message, key, direction):
+    key_index = 0
+    # *note: since key is shorter than text --> need to repeat it until it matches the length of the text
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    encrypted_text = ""
+
+    for char in message.lower():
+        if char == " ":
+            encrypted_text += char
+        else:
+            # find correct key_char to encode/decode
+            key_char = key[key_index % len(key)]
+            key_index += 1
+            # Define offset and encrypted/decrypted letter
+            offset = alphabet.index(key_char)
+            index = alphabet.find(char)
+            # new_index = (index + offset) % len(alphabet)
+            # add decrpytion functionality by multiplying offset by direction (1 encrypt / -1 decrypt)
+            new_index = (index + (offset * direction)) % len(alphabet)
+            encrypted_text += alphabet[new_index]
+    return encrypted_text
+
+
+encryption = vigenere(text, custom_key, 1)
+print(encryption)
+decryption = vigenere(encryption, custom_key, -1)
+print(decryption)
