@@ -1,0 +1,7 @@
+Variable naming convention --> snake_case
+String Methods:
+.find() .lower()
+*Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
+
+Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
+*Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
