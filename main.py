@@ -83,3 +83,40 @@ print(decryption)
 
 
 # -----------------------------------------------------------------------------------
+# Luhn Algorithm - check notes
+def luhn_algo(number):
+    sum_of_odd_digits = 0
+    card_number_reversed = number[::-1]
+    odd_digits = card_number_reversed[::2]
+    print(odd_digits)
+    for digit in odd_digits:
+        sum_of_odd_digits += int(digit)
+        print(sum_of_odd_digits)
+    # 1. from R --> L double every second digit; if > 9 then sum the digits of product (eg. 6*2=12 sum = 1+2=3)
+    sum_of_even_digits = 0
+    even_digits = card_number_reversed[1::2]
+    for digit in even_digits:
+        number = int(digit) * 2
+        sum_of_even_digits += number
+        if number >= 10:
+            number = number // 10 + number % 10
+        sum_of_even_digits += number
+    # 2.Take the sum of all the digits.
+    # --> 3. if [2.sum] is multiple of 10 (number is vald) else (number invalid)
+    total = sum_of_odd_digits + sum_of_even_digits
+    return 0 == total % 10
+
+
+def verify_card_number():
+    card_number = "4111-1111-4555-1142"
+    card_translation = str.maketrans({"-": "", " ": ""})
+    translated_card_number = card_number.translate(card_translation)
+
+    if luhn_algo(translated_card_number):
+        print("Valid")
+    else:
+        print("Invalid")
+    print(translated_card_number)
+
+
+verify_card_number()

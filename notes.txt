@@ -1,8 +1,28 @@
-Variable naming convention --> snake_case
-.isalpha() - returns True if all characters in string are alphabetic
-.find() return -1 vs .index() throws ValueErrorException {if substring not found}
-*Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
-*'pass' keyword in function body - used as a placeholder for future code to be added - no effect on code but prevents errors from no code block/incomplete code.
-f'Interpolate values into {variable} using f-string' 
-Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
-*Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
+## .isalpha() - returns True if all characters in string are alphabetic
+
+## .find() return -1 vs .index() throws ValueErrorException {if substring not found}
+
+## *Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
+
+## *'pass' keyword in function body - used as a placeholder for future code to be added - no effect on code but > prevents errors from no code block/incomplete code.
+
+## f'Interpolate values into {variable} using f-string' 
+
+## Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
+
+## *Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
+
+## str.maketrans() - built-in string method --> creates translation table (dict as param); can be used to replace chars in a string
+Then use string.translate(translation_table) to apply the translation
+
+## Luhn Algorithm
+### formula to validate variery of identification numbers
+### Widely used for error-checking in various apps (eg. credit card numbers)
+https://en.wikipedia.org/wiki/Luhn_algorithm
+1.From the right to left, double the value of every second digit; if the product is greater than 9, sum the digits of the products (eg. 6*2=12 > 9...sum = 1+2=3)
+	[use integer division {// 10} to get first digit and modulo {% 10} to get second digit] 
+2.Take the sum of all the digits.
+3.If the sum of all the digits is a multiple of 10, then the number is valid; else it is not valid.
+
+## slice[start:stop:step]
+example - reverse slice[start:stop:step][::-1] or use negative indexes
