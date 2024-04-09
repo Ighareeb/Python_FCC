@@ -31,19 +31,21 @@ caesar(text, shift)
 caesar(text, 13)
 
 # -----------------------------------------------------------------------------------
-# Vigenère Cipher (encrypt, decrypt fucntionality)
+# Vigenère Cipher (encrypt, decrypt fucntionality + punctuation/special chars/digits )
 # offset for each letter is determined by another text, called the key
 custom_key = "python"
 
 
-def vigenere(message, key, direction):
+def vigenere(message, key, direction=1):
     key_index = 0
     # *note: since key is shorter than text --> need to repeat it until it matches the length of the text
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     encrypted_text = ""
 
     for char in message.lower():
-        if char == " ":
+        # if char == " ": # replaced with --> .isalpha() method to check if char is NOT a letter/alphabetic-characters instead
+        # Append to message now includes punctuation, special chars, digits etc. (not just spaces)
+        if not char.isalpha():
             encrypted_text += char
         else:
             # find correct key_char to encode/decode
@@ -59,7 +61,25 @@ def vigenere(message, key, direction):
     return encrypted_text
 
 
-encryption = vigenere(text, custom_key, 1)
+# for encryption don't need to specify direction, default is 1
+def encrypt(message, key):
+    return vigenere(message, key)
+
+
+def decrypt(message, key):
+    return vigenere(message, key, -1)
+
+
+encryption = encrypt(text, custom_key)
 print(encryption)
-decryption = vigenere(encryption, custom_key, -1)
+decryption = decrypt(encryption, custom_key)
 print(decryption)
+
+
+# encryption = vigenere(text, custom_key, 1)
+# print(encryption)
+# decryption = vigenere(encryption, custom_key, -1)
+# print(decryption)
+
+
+# -----------------------------------------------------------------------------------

@@ -1,6 +1,8 @@
 Variable naming convention --> snake_case
+.isalpha() - returns True if all characters in string are alphabetic
 .find() return -1 vs .index() throws ValueErrorException {if substring not found}
 *Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
-
+*'pass' keyword in function body - used as a placeholder for future code to be added - no effect on code but prevents errors from no code block/incomplete code.
+f'Interpolate values into {variable} using f-string' 
 Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
 *Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
