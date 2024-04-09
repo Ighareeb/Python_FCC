@@ -1,21 +1,28 @@
+# STR
 ## .isalpha() - returns True if all characters in string are alphabetic
-
 ## .find() return -1 vs .index() throws ValueErrorException {if substring not found}
-
+## str.maketrans() - built-in string method --> creates translation table (dict as param); can be used to replace chars in a string
+Then use string.translate(translation_table) to apply the translation
 ## *Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
+## f'Interpolate values into {variable} using f-string' 
+## slice[start:stop:step]
+example - reverse slice[start:stop:step][::-1] or use negative indexes
+## .split(delimiter): Splits the string into a list of substrings at each occurrence of the delimiter.
 
+#LIST
+## my_list.append(?) - adds element to end of list
 ## *'pass' keyword in function body - used as a placeholder for future code to be added - no effect on code but > prevents errors from no code block/incomplete code.
 
-## f'Interpolate values into {variable} using f-string' 
+## .float() - converts *!String or int number --> returns floating point number [ValueError if string is not a number]
+
 
 ## Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
+## Python uses a two-pass parse process. In the first pass, it creates definitions for functions and variables. In the second pass, it executes the code.
+# use '__name__' variable to determine if scripot being run as the main program or being imported as a module (code written in another file) --> if == '__main__' then script is being run as main program
 
 ## *Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
 
-## str.maketrans() - built-in string method --> creates translation table (dict as param); can be used to replace chars in a string
-Then use string.translate(translation_table) to apply the translation
-
-## Luhn Algorithm
+# TUTORIAL 2 -- Luhn Algorithm
 ### formula to validate variery of identification numbers
 ### Widely used for error-checking in various apps (eg. credit card numbers)
 https://en.wikipedia.org/wiki/Luhn_algorithm
@@ -24,5 +31,7 @@ https://en.wikipedia.org/wiki/Luhn_algorithm
 2.Take the sum of all the digits.
 3.If the sum of all the digits is a multiple of 10, then the number is valid; else it is not valid.
 
-## slice[start:stop:step]
-example - reverse slice[start:stop:step][::-1] or use negative indexes
+
+# Tutorial 3: Create Expense Tracker - Lambda Function, lists + methods, dicts, while loops 
+## Lambda functions are short anonymouse functions (eg. lambda x: x+1) (JS Arrow functions)
+eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
