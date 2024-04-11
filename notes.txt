@@ -40,5 +40,5 @@ https://en.wikipedia.org/wiki/Luhn_algorithm
 ## Lambda functions are short anonymouse functions (eg. lambda x: x+1) (JS Arrow functions)
 eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
 
-# Tutorial 3: List Comprehension - construct new list from iterable types (lists, tuples, strings) +Build str Case Format Converter
+# Tutorial 4: List Comprehension - construct new list from iterable types (lists, tuples, strings) +Build str Case Format Converter
 ## List comprehensions in Python are a concise way to construct a list without using loops or the .append() method. Apart from being briefer, list comprehensions often run faster.
