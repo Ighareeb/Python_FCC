@@ -5,6 +5,8 @@
 Then use string.translate(translation_table) to apply the translation
 ## *Strings are immutable - cannot be changed once created --> TypeError thrown if try to reassign a character in a string. However a variable can be reassigned to a new string
 ## f'Interpolate values into {variable} using f-string' 
+## r'raw string - ignores escape characters in string' used mainly for regex patterns (eg. instead of '[0-9]' use r'\d')
+--> can be used in combination < fr'f-string with raw string' >
 ## slice[start:stop:step]
 example - reverse slice[start:stop:step][::-1] or use negative indexes
 ## .split(delimiter): Splits the string into a list of substrings at each occurrence of the delimiter.
@@ -42,3 +44,24 @@ eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
 
 # Tutorial 4: List Comprehension - construct new list from iterable types (lists, tuples, strings) +Build str Case Format Converter
 ## List comprehensions in Python are a concise way to construct a list without using loops or the .append() method. Apart from being briefer, list comprehensions often run faster.
+
+# Tutorial 5: Regular Expressions - Build Password Generator
+## 'random' module contains a pseudo-random number generator. 
+****IMPORTANT random algo is predicatable, not truly random so not suitable for cryptographic purposes
+### 'secrets' module - most secure source of !*OS provided*! randomness
+### random.random() - returns a floating point number between 0.0 (inclusive) and 1.0 (exclusive)
+### random.choice(?) - takes a sequence and returns a random item of the sequence
+### use 'secrets' module for cryptographically secure random number generator
+### secrets.choice(?) - takes a sequence and returns a random item of the sequence
+
+# 're' module - provides support for regular expressions (regex) in Python
+--> pattern = re.compile() - compiles a regex pattern into a regex object that can be used by other re methods.
+----> pattern.search(?) - searches for a regex pattern within a string and returns the first match
+	  re.search(pattern, ?)
+
+# (*args) specifies the number of non-keyworded arguments that can be passed and the operations that can be performed on the function in Python, whereas (**kwargs) is a variable number of keyworded arguments that can be passed to a function that can perform dictionary operations
+--> args is a tuple, kwargs is a dictionary
+--> iterate args, dictionary methods kwargs
+--> args - positional arguments, kwargs - keyword arguments (K:V pairs)
+
+# (Tuples) vs [Lists] - immutable. 
