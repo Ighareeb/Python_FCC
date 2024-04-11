@@ -180,3 +180,42 @@ def filter_expenses_by_category(expenses, category):
 # check to see if main is being run as the main program i.e. script running directly; not imported
 if __name__ == "__main__":
     main()
+
+# --------------------------------TUTORIAL 4---------------------------------------------------
+# List Comprehension - (construct new list from iterable types + str Format Case-converter) [without using FOR loop or .append()]
+
+
+# (v1 FOR LOOP) utility function to convert string to snake_case
+def convert_to_snake_case_for_loop(pascal_or_camel_cased_string):
+    snake_cased_char_list = []
+    for char in pascal_or_camel_cased_string:
+        if char.isupper():
+            converted_character = "_" + char.lower()
+            snake_cased_char_list.append(converted_character)
+        else:
+            snake_cased_char_list.append(char)
+    snake_cased_string = "".join(snake_cased_char_list)
+    clean_snake_cased_string = snake_cased_string.strip(
+        "_"
+    )  # remove '_' from start/end
+    return clean_snake_cased_string
+
+
+# (v2 LIST COMPREHENSION) utility function to convert string to snake_case
+def convert_to_snake_case(pascal_or_camel_cased_string):
+    # In the list constructor -->describe how build list based on conditions
+    snake_cased_char_list = [
+        # write condition first then object to iterate over
+        "_" + char.lower() if char.isupper() else char
+        for char in pascal_or_camel_cased_string
+    ]
+    return "".join(snake_cased_char_list).strip("_")
+
+
+def main():
+    print(convert_to_snake_case_for_loop("aLongAndComplexString"))
+    print(convert_to_snake_case("IAmAPascalCasedString"))
+
+
+if __name__ == "__main__":
+    main()

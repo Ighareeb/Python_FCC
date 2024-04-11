@@ -18,7 +18,11 @@ example - reverse slice[start:stop:step][::-1] or use negative indexes
 
 ## Python relies on indentation to define code blocks = (defined with ':'). IndentationError thrown + code execution stops if no indented block found after final colon (4 spaces - recommened/preferred, interpreters can recognize tab indentation)
 ## Python uses a two-pass parse process. In the first pass, it creates definitions for functions and variables. In the second pass, it executes the code.
-# use '__name__' variable to determine if scripot being run as the main program or being imported as a module (code written in another file) --> if == '__main__' then script is being run as main program
+
+# '__name__' variable to determine if scripot being run as the main program or being imported as a module (code written in another file) --> if == '__main__' then script is being run as main program
+	However, when a Python file is imported as a module, __name__ is set to the name of that module (i.e., the filename without the .py extension).
+	Ensures that the main() function (or any code within this block) is only executed when the script is run directly. This is useful when you have code (like tests or demonstrations of functionality) that you only want to run when executing the script directly, and not when importing the module.
+TLDR - if script imported as module, __name__ != '__main__' --> main() function not executed
 
 ## *Whitespace matters in Python - not like other languages were it is used for readability only. Indentation is essential for code to run properly/define code blocks
 
@@ -35,3 +39,6 @@ https://en.wikipedia.org/wiki/Luhn_algorithm
 # Tutorial 3: Create Expense Tracker - Lambda Function, lists + methods, dicts, while loops 
 ## Lambda functions are short anonymouse functions (eg. lambda x: x+1) (JS Arrow functions)
 eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
+
+# Tutorial 3: List Comprehension - construct new list from iterable types (lists, tuples, strings) +Build str Case Format Converter
+## List comprehensions in Python are a concise way to construct a list without using loops or the .append() method. Apart from being briefer, list comprehensions often run faster.
