@@ -70,3 +70,12 @@ eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
 *Access Python dict with dict_name[key] or dict_name.get(key) - returns None if key not found
 ### Graph Data Structure focus on relationships between Nodes/elements (eg. objects, entities, points in space etc.) connected together by Edges
 	Weighted graphs -->  edges are assigned a weight (eg. distance/time/quantitive-value between two points)
+
+# Tutorial 7: Recursion - Tower of Hanoi Puzzle
+##The puzzle consists of three rods and a number of disks of different diameters. Move disks from the first rod to the third rod {RULE cannot put a larger disk on top of a smaller one, can only move one disk at a time, can only move top-most disk}
+## puzzle can be solved in 2^n - 1 moves, where n is the number of disks
+	--> consider rod 1 = source, rod 2 = auxiliary, rod 3 = destination/target
+	--> pattern: movement between A and C = 1st, 4th and 7th move (%3 = 1) - remember indexing is 0 so +1 
+	--> pattern: movement between A and C = 2nd, 5th move (%3 = 2) - remember indexing is 0 so +1 
+	--> pattern: movement between B and C = 3rd, 6th move (%3 = 0) - remember indexing is 0 so +1 
+	--> pattern could be in in both directions (i.e. B to C, C to B) - so need to check if n is even or odd to determine direction of movement 

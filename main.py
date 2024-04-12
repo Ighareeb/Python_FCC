@@ -376,3 +376,84 @@ shortest_path(my_graph_weighted, "A")  # can add 3rd param to specify target nod
 # >>>
 # A-D distance: 1
 # Path: A -> D
+
+
+# --------------------------------TUTORIAL 7---------------------------------------------------
+# Tutorial 7: Recursion - Tower of Hanoi Puzzle
+NUMBER_OF_DISKS = 3
+number_of_moves = 2**NUMBER_OF_DISKS - 1  # puzzle can be solved in 2^n - 1 moves
+rods = {"A": list(range(NUMBER_OF_DISKS, 0, -1)), "B": [], "C": []}
+
+
+# Utility function for move() where eg. rod1 = source, rod2 = target for first if statement in move()
+def make_allowed_move(rod1, rod2):
+    forward = False
+    if not rods[rod2]:
+        forward = True
+    elif rods[rod1] and rods[rod1][-1] < rods[rod2][-1]:
+        forward = True
+    if forward:
+        print(f"Moving disk {rods[rod1][-1]} from {rod1} to {rod2}")
+        rods[rod2].append(rods[rod1].pop())
+    else:
+        print(f"Moving disk {rods[rod2][-1]} from {rod2} to {rod1}")
+        rods[rod1].append(rods[rod2].pop())
+    print(rods)  # track progress
+    print("\n")
+
+
+def move(n, source, auxiliary, target):
+    # display starting configuration
+    print(rods)
+    for i in range(number_of_moves):
+        remainder = (i + 1) % 3
+        if remainder == 1:
+            # need to set a conditional for when number of disks is odd
+            if n % 2 != 0:
+                print(f"Move {i + 1} allowed between {source} and {target}")
+                make_allowed_move(source, target)
+            else:
+                print(f"Move {i + 1} allowed between {source} and {auxiliary}")
+                make_allowed_move(source, auxiliary)
+        elif remainder == 2:
+            if n % 2 != 0:
+                print(f"Move {i + 1} allowed between {source} and {auxiliary}")
+                make_allowed_move(source, auxiliary)
+            else:
+                print(f"Move {i + 1} allowed between {source} and {target}")
+                make_allowed_move(source, target)
+        elif remainder == 0:
+            print(f"Move {i + 1} allowed between {auxiliary} and {target}")
+            make_allowed_move(auxiliary, target)
+
+
+move(NUMBER_OF_DISKS, "A", "B", "C")
+# >>> {'A': [3, 2, 1], 'B': [], 'C': []}
+
+# >>> Move 1 allowed between A and C
+# >>> Moving disk 1 from A to C
+# >>> {'A': [3, 2], 'B': [], 'C': [1]}
+
+# >>> Move 2 allowed between A and B
+# >>> Moving disk 2 from A to B
+# >>> {'A': [3], 'B': [2], 'C': [1]}
+
+# >>> Move 3 allowed between B and C
+# >>> Moving disk 1 from C to B
+# >>> {'A': [3], 'B': [2, 1], 'C': []}
+
+# >>> Move 4 allowed between A and C
+# >>> Moving disk 3 from A to C
+# >>> {'A': [], 'B': [2, 1], 'C': [3]}
+
+# >>> Move 5 allowed between A and B
+# >>> Moving disk 1 from B to A
+# >>> {'A': [1], 'B': [2], 'C': [3]}
+
+# >>> Move 6 allowed between B and C
+# >>> Moving disk 2 from B to C
+# >>> {'A': [1], 'B': [], 'C': [3, 2]}
+
+# >>> Move 7 allowed between A and C
+# >>> Moving disk 1 from A to C
+# >>> {'A': [], 'B': [], 'C': [3, 2, 1]}
