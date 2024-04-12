@@ -384,7 +384,6 @@ NUMBER_OF_DISKS = 3
 number_of_moves = 2**NUMBER_OF_DISKS - 1  # puzzle can be solved in 2^n - 1 moves
 rods = {"A": list(range(NUMBER_OF_DISKS, 0, -1)), "B": [], "C": []}
 
-
 # Utility function for move() where eg. rod1 = source, rod2 = target for first if statement in move()
 def make_allowed_move(rod1, rod2):
     forward = False
@@ -402,10 +401,10 @@ def make_allowed_move(rod1, rod2):
     print("\n")
 
 
-def move(n, source, auxiliary, target):
+# def move(n, source, auxiliary, target):
     # display starting configuration
     print(rods)
-    for i in range(number_of_moves):
+    # for i in range(number_of_moves):
         remainder = (i + 1) % 3
         if remainder == 1:
             # need to set a conditional for when number of disks is odd
@@ -425,35 +424,29 @@ def move(n, source, auxiliary, target):
         elif remainder == 0:
             print(f"Move {i + 1} allowed between {auxiliary} and {target}")
             make_allowed_move(auxiliary, target)
-
+    # Recrusive Solution - see notes
+    # Does not use util function make_allowed_move() OR number_of_moves variable
 
 move(NUMBER_OF_DISKS, "A", "B", "C")
-# >>> {'A': [3, 2, 1], 'B': [], 'C': []}
 
-# >>> Move 1 allowed between A and C
-# >>> Moving disk 1 from A to C
-# >>> {'A': [3, 2], 'B': [], 'C': [1]}
-
-# >>> Move 2 allowed between A and B
-# >>> Moving disk 2 from A to B
-# >>> {'A': [3], 'B': [2], 'C': [1]}
-
-# >>> Move 3 allowed between B and C
-# >>> Moving disk 1 from C to B
-# >>> {'A': [3], 'B': [2, 1], 'C': []}
-
-# >>> Move 4 allowed between A and C
-# >>> Moving disk 3 from A to C
-# >>> {'A': [], 'B': [2, 1], 'C': [3]}
-
-# >>> Move 5 allowed between A and B
-# >>> Moving disk 1 from B to A
-# >>> {'A': [1], 'B': [2], 'C': [3]}
-
-# >>> Move 6 allowed between B and C
-# >>> Moving disk 2 from B to C
-# >>> {'A': [1], 'B': [], 'C': [3, 2]}
-
-# >>> Move 7 allowed between A and C
-# >>> Moving disk 1 from A to C
-# >>> {'A': [], 'B': [], 'C': [3, 2, 1]}
+A = list(range(NUMBER_OF_DISKS, 0, -1))
+B = []
+C = []
+# Recrusive Solution - see notes
+    # Does not use util function make_allowed_move() OR number_of_moves variable
+def move(n, source, auxiliary, target):
+    if n  <= 0:
+        return
+    
+    #1 move n - 1 disks from source to auxiliary, so they are out of the way
+    move(n-1, source,  target, auxiliary)
+    #2 move the nth disk from source to target. remove last element from the rods[source] list and append it to the rods[target] list.
+    # rods[target].append(rods[source].pop())
+    target.append(source.pop())
+    # move the n - 1 disks that we left on auxiliary onto target
+    move(n-1,  auxiliary, source, target)
+    # display recursion progress
+    # print(rods, '\n')
+    print(A,B,C, '\n')
+# initiate call from source A to target C with auxiliary B
+print(NUMBER_OF_DISKS, A, B, C)
