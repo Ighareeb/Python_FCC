@@ -283,3 +283,96 @@ if __name__ == "__main__":
         1,
     )
     print("Generated password:", new_password)
+
+
+# --------------------------------TUTORIAL 6---------------------------------------------------
+# Tutorial 6: Algorithm Desgin - Shortest Path Algo
+# #(eg. For Graph Data structures - Dijkstra's Algorithm)
+my_graph_non_weighted = {
+    "A": ["B", "D"],
+    "B": ["A", "C"],
+    "C": ["B", "D"],
+    "D": ["A", "C"],
+}
+# Create weighted dict extending example - modify dict using list of tuples for each value first element in tuple = connected node, second element = weight of edge
+my_graph_weighted = {
+    "A": [("B", 3), ("D", 1)],
+    "B": [("A", 3), ("C", 4)],
+    "C": [("B", 4), ("D", 7)],
+    "D": [("A", 1), ("C", 7)],
+}
+my_graph_weighted_2 = {
+    "A": [("B", 5), ("C", 3), ("E", 11)],
+    "B": [("A", 5), ("C", 1), ("F", 2)],
+    "C": [("A", 3), ("B", 1), ("D", 1), ("E", 5)],
+    "D": [("C", 1), ("E", 9), ("F", 3)],
+    "E": [("A", 11), ("C", 5), ("D", 9)],
+    "F": [("B", 2), ("D", 3)],
+}
+
+
+# Algo will start at specific node, then explore all possible paths from that node to find the shortest path to any of the other nodes
+def shortest_path(graph, start, target=""):
+    # track visited nodes - explore all nodes connected to start and calculate shortest path then remove start node and repeast process for closest neighbour etc.
+    unvisited_node = list(graph)
+    # track shortest distance to each node
+    distances = {node: 0 if node == start else float("inf") for node in graph}
+    paths = {node: [] for node in graph}
+    paths[start].append(
+        start
+    )  # returns in alphabetical order --> we want smallest distance (while loop param)
+    while unvisited_node:
+        current = min(
+            unvisited_node, key=distances.get
+        )  # define current node to visit *note pylance error but code words...don't want to use lambda function workaround for now just for typecheck
+        for node, distance in graph[current]:
+            if distance + distances[current] < distances[node]:
+                distances[node] = distance + distances[current]
+                # keep track of node as distances dict updated (appended so is last item)
+                if paths[node] and paths[node][-1] == node:
+                    # if shorter distance is found avoid assigning the same path to the node. (use copy of current path to avoid modifying original path list)
+                    paths[node] = paths[current][:]
+                else:
+                    paths[node].extend(
+                        paths[current]
+                    )  # add the current node path to the neighbor node path
+                paths[node].append(node)
+        unvisited_node.remove(current)
+
+    targets_to_print = [target] if target else graph
+    for node in targets_to_print:
+        if node == start:
+            continue  # skip start node
+        print(
+            f'\n{start}-{node} distance: {distances[node]}\nPath: {" -> ".join(paths[node])}'
+        )
+    return distances, paths
+
+    print(f"Unvisited: {unvisited_node}\nDistances: {distances}\nPaths: {paths}")
+
+
+# for node in graph:
+# unvisited_node.append(node)
+# if node == start:
+#     distances[node] = 0
+# # initially all other nodes considered to be infinite distance from start node
+# else:
+#     distances[node] = float("inf")
+
+
+shortest_path(my_graph_weighted, "A")  # can add 3rd param to specify target node
+# >>> Unvisited: ['A', 'B', 'C', 'D']
+# Distances: {'A': 0, 'B': inf, 'C': inf, 'D': inf}
+# Paths: {'A': ['A'], 'B': [], 'C': [], 'D': []}
+# >>>
+# A-A distance: 0
+# Path: A
+# >>>
+# A-B distance: 3
+# Path: A -> B
+# >>>
+# A-C distance: 7
+# Path: A -> B -> C
+# >>>
+# A-D distance: 1
+# Path: A -> D

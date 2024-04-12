@@ -65,3 +65,8 @@ eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
 --> args - positional arguments, kwargs - keyword arguments (K:V pairs)
 
 # (Tuples) vs [Lists] - immutable. 
+
+# Tutorial 6: Algorithm Desgin - Shortest Path Algo
+*Access Python dict with dict_name[key] or dict_name.get(key) - returns None if key not found
+### Graph Data Structure focus on relationships between Nodes/elements (eg. objects, entities, points in space etc.) connected together by Edges
+	Weighted graphs -->  edges are assigned a weight (eg. distance/time/quantitive-value between two points)
