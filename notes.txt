@@ -105,3 +105,7 @@ eg.test = lambda x: x * 2 ---> print(sum(map(test, [2, 3, 5, 8])))
 	# Enumerate to keep track of element and position list (in this case the row and column of the Sudoku board)
 
 # ** append() adds its argument as a single element to the end of a list, while extend() adds each element of its argument to the list.
+
+# Tutorial 10: Binary Search Tree (BST)
+##BST structure --> each node has at most 2 children, L.C < P < R.C values making searching + sorting efficient
+## _insert/_search/_delete() and insert/search/delete() methods/functions --> _ prefix is convention to indicate method is private/intended for internal use within class/module/scope it is defined in.

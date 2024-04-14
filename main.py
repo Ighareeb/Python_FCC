@@ -497,142 +497,264 @@
 
 # --------------------------------TUTORIAL 9---------------------------------------------------
 # Tutorial 9: OOP - Sudoku puzzle
-class Board:
-    def __init__(self, board):
-        self.board = board
+# class Board:
+#     def __init__(self, board):
+#         self.board = board
 
+#     def __str__(self):
+#         # string represents sudoku board in a visually appealing ASCII art style. It uses special Unicode characters to draw the borders and intersections.
+#         upper_lines = f'\n╔═══{"╤═══"*2}{"╦═══"}{"╤═══"*2}{"╦═══"}{"╤═══"*2}╗\n'
+#         middle_lines = f'╟───{"┼───"*2}{"╫───"}{"┼───"*2}{"╫───"}{"┼───"*2}╢\n'
+#         lower_lines = f'╚═══{"╧═══"*2}{"╩═══"}{"╧═══"*2}{"╩═══"}{"╧═══"*2}╝\n'
+#         board_string = upper_lines
+#         for index, line in enumerate(self.board):
+#             # store elements of a single row of the board
+#             row_list = []
+#             # split each row in 3 sections to create 3x3 squares/grid
+#             # need to create 3 line segments to pass to enumerate() function - slice list
+#             for square_no, part in enumerate([line[:3], line[3:6], line[6:]], start=1):
+#                 # join elements of 'part' with | char (use generator function)
+#                 row_square = "|".join(str(item) for item in part)
+#                 row_list.extend(row_square)
+#                 # Check if current segment is NOT the last one
+#                 if square_no != 3:
+#                     row_list.append("║")
+#             # create str representation of row with spaces between elements
+#             row = f'║ {" ".join(row_list)} ║\n'
+#             # when passing input '0' will be used for empty cells. For better UI change to ' '
+#             row_empty = row.replace("0", " ")
+#             board_string += row_empty
+#             # check if current row index is NOT the last one ( < index 8 )
+#             if index < 8:
+#                 # check if row is the last row in the 3x3 square ( index % 3 == 2 ) index 2, 5, 8
+#                 if index % 3 == 2:
+#                     board_string += (
+#                         f'╠═══{"╪═══"*2}{"╬═══"}{"╪═══"*2}{"╬═══"}{"╪═══"*2}╣\n'
+#                     )
+#                 else:
+#                     board_string += middle_lines
+#             # handle when current row is last row of the board
+#             else:
+#                 board_string += lower_lines
+#         return board_string
+
+#     # method to find empty cells in the board
+#     def find_empty_cell(self):
+#         for row, contents in enumerate(self.board):
+#             try:
+#                 # try to find first occurence of 0 in the current row
+#                 col = contents.index(0)
+#                 return row, col
+#             except ValueError:
+#                 pass
+#         return None  # if no empty cells are found i.e. board is filled
+
+#     # method to check if number can be inserted in a specific row
+#     def valid_in_row(self, row, num):
+#         # check num is not already in the row
+#         return num not in self.board[row]
+
+#     # method to check if number can be inserted in a specific col
+#     def valid_in_col(self, col, num):
+#         # check num is equal to a num in the col of the current row
+#         for row in range(9):
+#             # for each element in specified col of current row check value != num
+#             return all(self.board[row][col] != num for row in range(9))
+
+#     # method to check if number can be inserted in the 3x3 square
+#     def valid_in_square(self, row, col, num):
+#         # calculate starting row index for 3x3 block in board grid (each would be multiple of 3)
+#         row_start = (row // 3) * 3
+#         # calculate starting col index for 3x3 block in board grid (each would be multiple of 3)
+#         col_start = (col // 3) * 3
+
+#         for row_no in range(row_start, row_start + 3):
+#             for col_no in range(col_start, col_start + 3):
+#                 # (prevent) check if specified number (num) already present in current cell of the 3x3 square
+#                 if self.board[row_no][col_no] == num:
+#                     return False
+#         return True
+
+#     # method to check if num valid choice for an empty cell by validating its compatibility with the row, column, and 3x3 square of the specified empty cell. USES UTIL FUNCTION
+#     def is_valid(self, empty, num):
+#         # unpack the empty tuple into row and col
+#         row, col = empty
+#         valid_in_row = self.valid_in_row(row, num)
+#         valid_in_col = self.valid_in_col(col, num)
+#         valid_in_square = self.valid_in_square(row, col, num)
+
+#         return all([valid_in_row, valid_in_col, valid_in_square])
+
+#     # method to solve sudoku in-place (modify existing board instead of creating new board)
+#     def solver(self):
+#         # check if there are any empty cells left on the board; if none then puzzle solved
+#         if (next_empty := self.find_empty_cell()) is None:
+#             return True
+#         else:  # still empty cells
+#             for guess in range(1, 10):
+#                 # for each number (guess) check if the number is valid choice for current empty cell
+#                 self.is_valid(next_empty, guess)
+#                 # unpack the next_empty tuple into row and col
+#                 row, col = next_empty
+#                 # assign value of guess to the current empty cell since valid
+#                 self.board[row][col] = guess
+#                 # recursive call to solver() to continue solving the puzzle
+#                 if self.solver():
+#                     return True
+#                 else:
+#                     # if False then 'guess' led to an unsolvable sudoku --> so reset the cell to 0
+#                     self.board[row][col] = 0
+#             return False  # if no valid guess found for current empty cell
+
+
+# # --------------------------------------Board Class---------------------------------------------------------------
+
+
+# # function to print and solve the sudoku board
+# def solve_sudoku(board):
+#     gameboard = Board(board)
+#     print(f"\nPuzzle to solve:\n{gameboard}")
+#     if gameboard.solver():
+#         print("\nSolved puzzle:")
+#         # current state of the board using __str__method for Board class
+#         print(gameboard)
+#     else:
+#         print("\nThe provided puzzle is unsolvable.")
+#     return gameboard
+
+
+# puzzle = [
+#     [0, 0, 2, 0, 0, 8, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 3, 7, 6, 2],
+#     [4, 3, 0, 0, 0, 0, 8, 0, 0],
+#     [0, 5, 0, 0, 3, 0, 0, 9, 0],
+#     [0, 4, 0, 0, 0, 0, 0, 2, 6],
+#     [0, 0, 0, 4, 6, 7, 0, 0, 0],
+#     [0, 8, 6, 7, 0, 4, 0, 0, 0],
+#     [0, 0, 0, 5, 1, 9, 0, 0, 8],
+#     [1, 7, 0, 0, 0, 6, 0, 0, 5],
+# ]
+
+# solve_sudoku(puzzle)
+
+
+# --------------------------------TUTORIAL 10---------------------------------------------------
+# Tutorial 10: Binary Search Tree (BST)
+from unittest import result
+
+
+class TreeNode:
+    def __init__(self, key) -> None:
+        self.key = key
+        self.left = None
+        self.right = None
+        # None because when node first created no L/R children
+
+    # method to return string representation of the node (class object). Converts key to a str using str()
     def __str__(self):
-        # string represents sudoku board in a visually appealing ASCII art style. It uses special Unicode characters to draw the borders and intersections.
-        upper_lines = f'\n╔═══{"╤═══"*2}{"╦═══"}{"╤═══"*2}{"╦═══"}{"╤═══"*2}╗\n'
-        middle_lines = f'╟───{"┼───"*2}{"╫───"}{"┼───"*2}{"╫───"}{"┼───"*2}╢\n'
-        lower_lines = f'╚═══{"╧═══"*2}{"╩═══"}{"╧═══"*2}{"╩═══"}{"╧═══"*2}╝\n'
-        board_string = upper_lines
-        for index, line in enumerate(self.board):
-            # store elements of a single row of the board
-            row_list = []
-            # split each row in 3 sections to create 3x3 squares/grid
-            # need to create 3 line segments to pass to enumerate() function - slice list
-            for square_no, part in enumerate([line[:3], line[3:6], line[6:]], start=1):
-                # join elements of 'part' with | char (use generator function)
-                row_square = "|".join(str(item) for item in part)
-                row_list.extend(row_square)
-                # Check if current segment is NOT the last one
-                if square_no != 3:
-                    row_list.append("║")
-            # create str representation of row with spaces between elements
-            row = f'║ {" ".join(row_list)} ║\n'
-            # when passing input '0' will be used for empty cells. For better UI change to ' '
-            row_empty = row.replace("0", " ")
-            board_string += row_empty
-            # check if current row index is NOT the last one ( < index 8 )
-            if index < 8:
-                # check if row is the last row in the 3x3 square ( index % 3 == 2 ) index 2, 5, 8
-                if index % 3 == 2:
-                    board_string += (
-                        f'╠═══{"╪═══"*2}{"╬═══"}{"╪═══"*2}{"╬═══"}{"╪═══"*2}╣\n'
-                    )
-                else:
-                    board_string += middle_lines
-            # handle when current row is last row of the board
-            else:
-                board_string += lower_lines
-        return board_string
-
-    # method to find empty cells in the board
-    def find_empty_cell(self):
-        for row, contents in enumerate(self.board):
-            try:
-                # try to find first occurence of 0 in the current row
-                col = contents.index(0)
-                return row, col
-            except ValueError:
-                pass
-        return None  # if no empty cells are found i.e. board is filled
-
-    # method to check if number can be inserted in a specific row
-    def valid_in_row(self, row, num):
-        # check num is not already in the row
-        return num not in self.board[row]
-
-    # method to check if number can be inserted in a specific col
-    def valid_in_col(self, col, num):
-        # check num is equal to a num in the col of the current row
-        for row in range(9):
-            # for each element in specified col of current row check value != num
-            return all(self.board[row][col] != num for row in range(9))
-
-    # method to check if number can be inserted in the 3x3 square
-    def valid_in_square(self, row, col, num):
-        # calculate starting row index for 3x3 block in board grid (each would be multiple of 3)
-        row_start = (row // 3) * 3
-        # calculate starting col index for 3x3 block in board grid (each would be multiple of 3)
-        col_start = (col // 3) * 3
-
-        for row_no in range(row_start, row_start + 3):
-            for col_no in range(col_start, col_start + 3):
-                # (prevent) check if specified number (num) already present in current cell of the 3x3 square
-                if self.board[row_no][col_no] == num:
-                    return False
-        return True
-
-    # method to check if num valid choice for an empty cell by validating its compatibility with the row, column, and 3x3 square of the specified empty cell. USES UTIL FUNCTION
-    def is_valid(self, empty, num):
-        # unpack the empty tuple into row and col
-        row, col = empty
-        valid_in_row = self.valid_in_row(row, num)
-        valid_in_col = self.valid_in_col(col, num)
-        valid_in_square = self.valid_in_square(row, col, num)
-
-        return all([valid_in_row, valid_in_col, valid_in_square])
-
-    # method to solve sudoku in-place (modify existing board instead of creating new board)
-    def solver(self):
-        # check if there are any empty cells left on the board; if none then puzzle solved
-        if (next_empty := self.find_empty_cell()) is None:
-            return True
-        else:  # still empty cells
-            for guess in range(1, 10):
-                # for each number (guess) check if the number is valid choice for current empty cell
-                self.is_valid(next_empty, guess)
-                # unpack the next_empty tuple into row and col
-                row, col = next_empty
-                # assign value of guess to the current empty cell since valid
-                self.board[row][col] = guess
-                # recursive call to solver() to continue solving the puzzle
-                if self.solver():
-                    return True
-                else:
-                    # if False then 'guess' led to an unsolvable sudoku --> so reset the cell to 0
-                    self.board[row][col] = 0
-            return False  # if no valid guess found for current empty cell
+        return str(self.key)
 
 
-# --------------------------------------Board Class---------------------------------------------------------------
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None  # represents root node of BST, empty tree when first created
+
+    # -------------------INSERTION UTIL + METHOD
+    # util function used in main insert method for the class to insert new node into BST (use recursively to traverse tree to insert values in L/R child nodes)
+    def _insert(self, node, key):
+        # check if node is None (empty node) then create new node with key value
+        if node is None:
+            return TreeNode(key)
+        if key < node.key:  # insert to L node
+            node.left = self._insert(node.left, key)
+        elif key < node.key:  # insert to R node
+            node.right = self._insert(node.right, key)
+        return node  # after insertion complete return current node to update tree structure at higher levels of recursive call stack
+
+    # method to insert a new node (key value) into the BST
+    def insert(self, key):
+        self.root = self._insert(self.root, key)
+        # util ._insert() actully performs insertion. self.root passes root node, which is starting point for insertion process.
+
+    # ----------------------SEARCH UTIL + METHOD-------------------------
+
+    # util function used in main search method for the class to search for a key in the BST (use recursively to traverse tree to find key in L/R child nodes)
+    def _search(self, node, key):
+        # Define base case for recursive search function
+        # 1. search has reached end of branch without finding key OR key found in current node
+        if node is None or node.key == key:
+            return node
+        # 2. check if target key < key of current node;
+        if key < node.key:
+            return self._search(node.left, key)
+        # 3. if Not True then need to search R side since key > current node key.
+        return self._search(node.right, key)
+
+    # method for search functionality in BST
+    def search(self, key):
+        return self._search(self.root, key)
+
+    # ----------------------Min value & in-order traversal UTILs + METHODs -------------------------
+    # util function use in util _delete() function to find min value in right subtree of node to be deleted
+    # when node to delete has two children you need to choose replacement node 'in-order successor' method choose smallest element from right subtree to replace deleted node
+    def _min_value(self, node):
+        # iterate through L child node of R Node until you reach the end of the branch (to get min value of Right node)
+        while node.left is not None:
+            node = node.left
+        return node.key
+
+    # in-order traversal UTIL function (node = current node being processed/traversef, result = list to append/store keys is sorted order)
+    def _inorder_traversal(self, node, result):
+        if node:  # is not None
+            self._inorder_traversal(node.left, result)
+            result.append(node.key)
+            # recursive call to traverse R child node
+            self._inorder_traversal(node.right, result)
+
+    # in-order traversal method responsible for traversing the BST in order (L, Root, R) --> return keys of nodes in sorted order. It is depth-first traversal method that checks L subtree, then Node, then right subtree.
+    def inorder_traversal(self):
+        result = []
+        self._inorder_traversal(self.root, result)
+        return result
+
+    # util function used in main delete method for the class to delete for a key in the BST (use recursively to traverse tree to find key in L/R child nodes)
+    def _delete(self, node, key):
+        # Define base case for recursive delete function
+        # 1. delete has reached end of branch without finding key
+        if node is None:
+            return node
+        # 2. check if target key < key of current node;
+        if key < node.key:
+            node.left = self._delete(node.left, key)
+        elif key > node.key:
+            node.right = self._delete(node.right, key)
+        # 3. Previous conditionals valid for nodes with 0, 1 child nodes. Now need to handle nodes with 2 children
+        # if both conditions False then node has both R/L children so need to choose 'successor' (min value in right subtree) --> use _min_value() util function
+        # after finding min value in right subtree need to recursively delete node with min value for right subtree
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            node.key = self._min_value(node.right)
+            node.right = self._delete(node.right, node.key)
+        return node
+
+    # method for delete functionality in BST
+    def delete(self, key):
+        # the delete operation might result in new root so need to update root after deletion
+        self.root = self._delete(self.root, key)
 
 
-# function to print and solve the sudoku board
-def solve_sudoku(board):
-    gameboard = Board(board)
-    print(f"\nPuzzle to solve:\n{gameboard}")
-    if gameboard.solver():
-        print("\nSolved puzzle:")
-        # current state of the board using __str__method for Board class
-        print(gameboard)
-    else:
-        print("\nThe provided puzzle is unsolvable.")
-    return gameboard
+bst = BinarySearchTree()
+nodes = [50, 30, 20, 40, 70, 60, 80]
+for node in nodes:
+    bst.insert(node)
+print("Inorder traversal:", bst.inorder_traversal())
 
+print("Search for 40:", bst.search(40))
+# Search for 40: <__main__.TreeNode object at 0x1112fe0>40)) - which is default str representation when printing instance of a class object.
+# to change to print something useful use __str__ in TreeNode class
 
-puzzle = [
-    [0, 0, 2, 0, 0, 8, 0, 0, 0],
-    [0, 0, 0, 0, 0, 3, 7, 6, 2],
-    [4, 3, 0, 0, 0, 0, 8, 0, 0],
-    [0, 5, 0, 0, 3, 0, 0, 9, 0],
-    [0, 4, 0, 0, 0, 0, 0, 2, 6],
-    [0, 0, 0, 4, 6, 7, 0, 0, 0],
-    [0, 8, 6, 7, 0, 4, 0, 0, 0],
-    [0, 0, 0, 5, 1, 9, 0, 0, 8],
-    [1, 7, 0, 0, 0, 6, 0, 0, 5],
-]
-
-solve_sudoku(puzzle)
+bst.delete(40)
+print("Inorder traversal after deleting 40:", bst.inorder_traversal())
